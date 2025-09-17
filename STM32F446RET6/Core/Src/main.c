@@ -21,11 +21,13 @@
 #include "adc.h"
 #include "dma.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "usart.h"
+#include "dma.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,8 +48,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint32_t adc_buffer[14] = {0, };
-uint32_t test_value = 0;
+//uint32_t adc_buffer[14] = {0, };
+//uint32_t test_value = 0;
+uint8_t rx_buffer[256];
 
 /* USER CODE END PV */
 
@@ -95,10 +98,16 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM8_Init();
   MX_TIM6_Init();
+  MX_USART6_UART_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim8);
-//  HAL_ADC_Start_DMA(&hadc1, adc_buffer, 14);
   HAL_TIM_Base_Start_IT(&htim6);
+
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
 
   /* USER CODE END 2 */
 
@@ -122,16 +131,30 @@ int main(void)
 //	  }
 //
 //	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12)) {
-//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 1);
+//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, 1);
 //	  } else {
-//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 0);
+//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, 0);
 //	  }
 //
 //	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_15)) {
-//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, 1);
+//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 1);
 //	  } else {
-//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14 , 0);
+//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13 , 0);
 //	  }
+
+	  TIM1->CCR1 = 0;
+	  TIM1->CCR2 = 0;
+	  HAL_Delay(500);
+	  TIM1->CCR1 = 150;
+	  TIM1->CCR2 = 150;
+	  HAL_Delay(500);
+	  TIM1->CCR1 = 300;
+	  TIM1->CCR2 = 300;
+	  HAL_Delay(500);
+	  TIM1->CCR1 = 500;
+	  TIM1->CCR2 = 500;
+	  HAL_Delay(500);
+//	  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_15);
 
   }
   /* USER CODE END 3 */
@@ -191,12 +214,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	if (htim->Instance == htim6.Instance) {
-		test_value++;
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-	}
-}
+
 /* USER CODE END 4 */
 
 /**
