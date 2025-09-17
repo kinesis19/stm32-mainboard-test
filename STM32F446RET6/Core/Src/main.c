@@ -47,6 +47,7 @@
 
 /* USER CODE BEGIN PV */
 uint32_t adc_buffer[14] = {0, };
+uint32_t test_value = 0;
 
 /* USER CODE END PV */
 
@@ -93,9 +94,11 @@ int main(void)
   MX_DMA_Init();
   MX_ADC1_Init();
   MX_TIM8_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim8);
-  HAL_ADC_Start_DMA(&hadc1, adc_buffer, 14);
+//  HAL_ADC_Start_DMA(&hadc1, adc_buffer, 14);
+  HAL_TIM_Base_Start_IT(&htim6);
 
   /* USER CODE END 2 */
 
@@ -188,7 +191,12 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	if (htim->Instance == htim6.Instance) {
+		test_value++;
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+	}
+}
 /* USER CODE END 4 */
 
 /**
