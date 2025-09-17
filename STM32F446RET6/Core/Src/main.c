@@ -46,6 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+uint32_t adc_buffer[14] = {0, };
 
 /* USER CODE END PV */
 
@@ -93,6 +94,8 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&htim8);
+  HAL_ADC_Start_DMA(&hadc1, adc_buffer, 14);
 
   /* USER CODE END 2 */
 
@@ -103,12 +106,30 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 1);
-//	  HAL_Delay(200);
-//	  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 0);
-//	  HAL_Delay(200);
-	  HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-	  HAL_Delay(200);
+//	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10)) {
+//		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, 1);
+//	  } else {
+//		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, 0);
+//	  }
+//
+//	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11)) {
+//		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, 1);
+//	  } else {
+//		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, 0);
+//	  }
+//
+//	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12)) {
+//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 1);
+//	  } else {
+//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 0);
+//	  }
+//
+//	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_15)) {
+//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, 1);
+//	  } else {
+//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14 , 0);
+//	  }
+
   }
   /* USER CODE END 3 */
 }
