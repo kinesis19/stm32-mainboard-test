@@ -50,10 +50,10 @@
 /* USER CODE BEGIN PV */
 //uint32_t adc_buffer[14] = {0, };
 //uint32_t test_value = 0;
-uint8_t rx_buffer[256];
-float encoder1_value = 0;
-float encoder2_value = 0;
-uint16_t timer_encoder;
+//uint8_t rx_buffer[256];
+//float encoder1_value = 0;
+//float encoder2_value = 0;
+//uint16_t timer_encoder;
 
 /* USER CODE END PV */
 
@@ -65,9 +65,9 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	timer_encoder = __HAL_TIM_GET_COUNTER(&htim3);
-}
+//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+//	timer_encoder = __HAL_TIM_GET_COUNTER(&htim3);
+//}
 
 /* USER CODE END 0 */
 
@@ -154,27 +154,27 @@ int main(void)
 //	  } else {
 //		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13 , 0);
 //	  }
-
-	  TIM1->CCR1 = 0;
-	  TIM1->CCR2 = 0;
-	  encoder1_value = TIM3->CNT;
-	  encoder2_value = TIM4->CNT;
-	  HAL_Delay(500);
-	  TIM1->CCR1 = 150;
-	  TIM1->CCR2 = 150;
-	  encoder1_value = TIM3->CNT;
-	  encoder2_value = TIM4->CNT;
-	  HAL_Delay(500);
-	  TIM1->CCR1 = 300;
-	  TIM1->CCR2 = 300;
-	  encoder1_value = TIM3->CNT;
-	  encoder2_value = TIM4->CNT;
-	  HAL_Delay(500);
-	  TIM1->CCR1 = 500;
-	  TIM1->CCR2 = 500;
-	  encoder1_value = TIM3->CNT;
-	  encoder2_value = TIM4->CNT;
-	  HAL_Delay(500);
+//
+//	  TIM1->CCR1 = 0;
+//	  TIM1->CCR2 = 0;
+//	  encoder1_value = TIM3->CNT;
+//	  encoder2_value = TIM4->CNT;
+//	  HAL_Delay(500);
+//	  TIM1->CCR1 = 150;
+//	  TIM1->CCR2 = 150;
+//	  encoder1_value = TIM3->CNT;
+//	  encoder2_value = TIM4->CNT;
+//	  HAL_Delay(500);
+//	  TIM1->CCR1 = 300;
+//	  TIM1->CCR2 = 300;
+//	  encoder1_value = TIM3->CNT;
+//	  encoder2_value = TIM4->CNT;
+//	  HAL_Delay(500);
+//	  TIM1->CCR1 = 500;
+//	  TIM1->CCR2 = 500;
+//	  encoder1_value = TIM3->CNT;
+//	  encoder2_value = TIM4->CNT;
+//	  HAL_Delay(500);
 
 
 
